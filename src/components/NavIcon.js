@@ -6,6 +6,12 @@ export const NavIcon = ({
   focused = true,
   name,
   color = styles.darkBlueColor,
+  onPress,
 }) => (
-  <Icon name={name} size={35} color={focused ? color : styles.darkGreyColor} />
+  <Icon
+    name={name}
+    size={35}
+    color={focused ? color : styles.darkGreyColor}
+    onPress={onPress}
+  />
 );

@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styled from 'styled-components';
-import {AuthInput} from '../../components/AuthInput';
-import {AuthButtonLight} from '../../components/AuthButtonLight';
+import {AuthInput} from '../../components/Auth/AuthInput';
+import {AuthButtonLight} from '../../components/buttons/AuthButtonLight';
 import {useInput} from '../../hooks/useInput';
 import {useMutation} from '@apollo/react-hooks';
 import {LOG_IN} from './AuthQueries';
+import constants from '../../constants';
+import FacebookBtn from '../../components/buttons/FacebookBtn';
 
 const ImageBackground = styled.ImageBackground`
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex: 1;
   padding: 0 30px;
@@ -20,6 +22,35 @@ const LoginBlock = styled.View`
   opacity: 0.83;
   padding: 27px 23.5px 24px;
   border-radius: 10px;
+  justify-content: space-around;
+  height: ${constants.height / 2}px;
+`;
+const LoginBlockLabel = styled.Text`
+  align-content: center;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+`;
+const AppTitle = styled.Text`
+  font-family: 'Josefin Sans';
+  font-size: 56px;
+`;
+const SocialBlock = styled.View``;
+const SocialText = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+const SocialLabel = styled.Text`
+  font-style: italic;
+  font-size: 14px;
+  color: #707070;
+  padding: 0 10px;
+`;
+const Line = styled.View`
+  width: 25%;
+  border-bottom-width: 1px;
+  border-bottom-color: #707070;
 `;
 
 export default ({route, navigation}) => {
@@ -72,7 +103,9 @@ export default ({route, navigation}) => {
       <ImageBackground
         resizeMode={'cover'}
         source={require('../../images/hello_bg.jpg')}>
+        <AppTitle>TRAVLNOTE</AppTitle>
         <LoginBlock>
+          <LoginBlockLabel>Вход</LoginBlockLabel>
           <AuthInput
             {...emailInput}
             keyboardType="email-address"
@@ -86,6 +119,14 @@ export default ({route, navigation}) => {
             text="Войти"
             onPress={handleLogin}
           />
+          <SocialBlock>
+            <SocialText>
+              <Line />
+              <SocialLabel>войти с помощью</SocialLabel>
+              <Line />
+            </SocialText>
+            <FacebookBtn />
+          </SocialBlock>
         </LoginBlock>
       </ImageBackground>
     </TouchableWithoutFeedback>

@@ -6,9 +6,12 @@ import {AuthNavigation} from '../navigation/AuthNavigation';
 import {MainNavigation} from '../navigation/MainNavigation';
 
 export default () => {
+  const linking = {
+    prefixes: ['https://travlnote.com', 'travlnote://'],
+  };
   const {isLoggedIn, logUserIn, setLogUserOut} = useContext(AuthContext);
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       {isLoggedIn ? <MainNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );

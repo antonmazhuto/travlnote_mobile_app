@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react';
 import {Alert, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import styled from 'styled-components';
-import {AuthInput} from '../../components/AuthInput';
-import {AuthButtonLight} from '../../components/AuthButtonLight';
+import {AuthInput} from '../../components/Auth/AuthInput';
+import {AuthButtonLight} from '../../components/buttons/AuthButtonLight';
 import {useInput} from '../../hooks/useInput';
 import {useMutation} from '@apollo/react-hooks';
 import {CONFIRM_SECRET} from './AuthQueries';

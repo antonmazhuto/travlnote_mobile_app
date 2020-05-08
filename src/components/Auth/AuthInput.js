@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import constants from '../constants';
 
 const Container = styled.View`
   margin-bottom: 25px;

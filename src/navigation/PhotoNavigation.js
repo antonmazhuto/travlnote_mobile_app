@@ -11,14 +11,26 @@ const Stack = createStackNavigator();
 
 const PhotoTabs = () => (
   <Tab.Navigator tabBarPosition="bottom">
-    <Tab.Screen name="SelectPhoto" component={SelectPhoto} options={{tabBarLabel: 'Галерея'}} />
-    <Tab.Screen name="TakePhoto" component={TakePhoto} options={{tabBarLabel: 'Фото'}} />
+    <Tab.Screen
+      name="SelectPhoto"
+      component={SelectPhoto}
+      options={{tabBarLabel: 'Галерея'}}
+    />
+    <Tab.Screen
+      name="TakePhoto"
+      component={TakePhoto}
+      options={{tabBarLabel: 'Фото'}}
+    />
   </Tab.Navigator>
 );
 
 export default () => (
   <Stack.Navigator screenOptions={{headerStyle: {...stackStyles}}}>
-    <Stack.Screen name="PhotoTabs" component={PhotoTabs} />
+    <Stack.Screen
+      name="PhotoTabs"
+      component={PhotoTabs}
+      options={{headerShown: false}}
+    />
     <Stack.Screen name="UploadPhoto" component={UploadPhoto} />
   </Stack.Navigator>
 );

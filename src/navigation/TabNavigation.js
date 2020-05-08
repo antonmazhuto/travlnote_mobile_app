@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image, Platform} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from '../screens/Tabs/Profile';
 import {createStackNavigator} from '@react-navigation/stack';
-import HeaderButton from '../components/HeaderButton';
+import HeaderButton from '../components/buttons/HeaderButton';
 import constants from '../constants';
 import styles from '../styles';
 import {NavIcon} from '../components/NavIcon';
@@ -11,35 +11,48 @@ import Trip from '../screens/Tabs/Trip';
 import Money from '../screens/Tabs/Money';
 import Bookmark from '../screens/Tabs/Bookmark';
 import {stackStyles} from './config';
+import Detail from '../screens/Detail';
+import EditProfile from '../screens/EditProfile';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
-const HomeStack = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerStyle: {...stackStyles},
-    }}>
-    <Stack.Screen
-      name="Home"
-      component={Profile}
-      options={{
-        headerTitle: (
-          <Image
-            style={{
-              height: 35,
-              width: constants.width / 1.5,
-            }}
-            resizeMode="cover"
-            source={require('../images/logotype.png')}
-          />
-        ),
-        headerRight: () => <HeaderButton />,
-      }}
-    />
-  </Stack.Navigator>
-);
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {...stackStyles},
+      }}>
+      <Stack.Screen
+        name="Home"
+        component={Profile}
+        options={{
+          headerTitle: (
+            <Image
+              style={{
+                height: 35,
+                width: constants.width / 1.5,
+              }}
+              resizeMode="cover"
+              source={require('../images/logotype.png')}
+            />
+          ),
+          headerRight: () => <HeaderButton />,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          title: 'Редактировать профиль',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export const TabNavigation = () => (
   <Tab.Navigator

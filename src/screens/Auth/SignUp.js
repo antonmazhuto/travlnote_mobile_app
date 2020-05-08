@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Alert, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import styled from 'styled-components';
-import {AuthInput} from '../../components/AuthInput';
-import {AuthButtonLight} from '../../components/AuthButtonLight';
+import {AuthInput} from '../../components/Auth/AuthInput';
+import {AuthButtonLight} from '../../components/buttons/AuthButtonLight';
 import {useInput} from '../../hooks/useInput';
 import {useMutation} from '@apollo/react-hooks';
 import {CREATE_ACCOUNT} from './AuthQueries';
-import {AuthButtonDark} from '../../components/AuthButtonDark';
+import {AuthButtonDark} from '../../components/buttons/AuthButtonDark';
+import constants from '../../constants';
+import FacebookBtn from '../../components/buttons/FacebookBtn';
 // import FacebookBtn from "../../components/FacebookBtn";
 
 const ImageBackground = styled.ImageBackground`
@@ -22,10 +24,36 @@ const LoginBlock = styled.View`
   opacity: 0.83;
   padding: 27px 23.5px 24px;
   border-radius: 10px;
+  justify-content: space-around;
+  height: ${constants.height / 2}px;
 `;
-
-const FBContainer = styled.View`
-  margin-top: 30px;
+const LoginBlockLabel = styled.Text`
+  align-content: center;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+`;
+const AppTitle = styled.Text`
+  font-family: 'Josefin Sans';
+  font-size: 56px;
+`;
+const SocialBlock = styled.View``;
+const SocialText = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+const SocialLabel = styled.Text`
+  font-style: italic;
+  font-size: 14px;
+  color: #707070;
+  padding: 0 10px;
+`;
+const Line = styled.View`
+  width: 25%;
+  border-bottom-width: 1px;
+  border-bottom-color: #707070;
 `;
 
 export default ({route, navigation}) => {
@@ -86,7 +114,20 @@ export default ({route, navigation}) => {
       <ImageBackground
         resizeMode={'cover'}
         source={require('../../images/hello_bg.jpg')}>
+        <AppTitle>TRAVLNOTE</AppTitle>
         <LoginBlock>
+          <LoginBlockLabel>Регистрация</LoginBlockLabel>
+          <SocialBlock>
+            <SocialText>
+              <Line />
+              <SocialLabel>войти с помощью</SocialLabel>
+              <Line />
+            </SocialText>
+            <FacebookBtn />
+            <SocialText>
+              <SocialLabel>или регистрация через e-mail</SocialLabel>
+            </SocialText>
+          </SocialBlock>
           <AuthInput {...fNameInput} placeholder="Имя" autoCapitalize="words" />
           <AuthInput
             {...lNameInput}
@@ -112,14 +153,6 @@ export default ({route, navigation}) => {
             onPress={handleSignUp}
           />
         </LoginBlock>
-        <FBContainer>
-          {/*<FacebookBtn/>*/}
-          <AuthButtonDark
-            loading={false}
-            onPress={() => null}
-            text="Войти через Facebook"
-          />
-        </FBContainer>
       </ImageBackground>
     </TouchableWithoutFeedback>
   );

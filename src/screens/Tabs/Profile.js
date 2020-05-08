@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import {ScrollView, RefreshControl} from 'react-native';
+import {ScrollView, RefreshControl, TouchableOpacity} from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import Loader from '../../components/Loader';
 import {gql} from 'apollo-boost';
 import {USER_FRAGMENT} from '../../fragments';
-import {UserProfile} from '../../components/UserProfile';
+import {UserProfile} from '../../components/Profile/UserProfile';
+import {AppContainer} from '../../components/AppContainer';
+import {ME} from './ProfileQueries';
 
 const View = styled.View`
   justify-content: center;
@@ -14,27 +16,14 @@ const View = styled.View`
 `;
 const Text = styled.Text``;
 
-const ME = gql`
-  {
-    me {
-      user {
-        fullName
-        username
-        firstName
-        lastName
-        bio
-      }
-      trips {
-        id
-        country
-        priceTickets
-        priceDocuments
-        dateFrom
-        dateTo
-      }
-      tripsCount
-    }
-  }
+const ToolTip = styled.View`
+  background-color: #fdfdfd;
+  width: 200px;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
 `;
 
 export default ({navigation}) => {
@@ -43,22 +32,39 @@ export default ({navigation}) => {
   const refresh = async () => {
     try {
       setRefreshing(true);
-      await refetch()
+      await refetch();
     } catch (e) {
-      console.log(e)
+      console.log(e);
     } finally {
-      setRefreshing(false)
+      setRefreshing(false);
     }
   };
 
+  const [isVisible, setVisible] = useState(false);
+
   return (
-    <ScrollView refreshControl = {<RefreshControl refreshing={refreshing} onRefresh={refresh}/>}>
-      {
-        loading ?
-         <Loader /> :
-         data && data.me &&
-         <UserProfile {...data.me} />
-      }
-    </ScrollView>
+    <AppContainer
+      title="Профиль"
+      iconRight="ios-menu"
+      flatlist={true}
+      onPressRight={() => setVisible((prevState) => !prevState)}>
+      {isVisible && (
+        <ToolTip>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('EditProfile', data.me.user);
+              setVisible(false);
+            }}>
+            <Text>редактировать профиль</Text>
+          </TouchableOpacity>
+        </ToolTip>
+      )}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+        }>
+        {loading ? <Loader /> : data && data.me && <UserProfile {...data.me} />}
+      </ScrollView>
+    </AppContainer>
   );
 };
